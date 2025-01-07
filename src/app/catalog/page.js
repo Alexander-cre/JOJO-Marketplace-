@@ -3,7 +3,8 @@ import NavBar from "@/components/navbar";
 import ProductSideBar from "@/components/productsidebar";
 import ProfileSideBar from "@/components/profilesidebar";
 import Link from "next/link";
-import './catalog.css' ;
+import './catalog.css';
+import products from "../data/products";
 
 const Catalog = () => {
     return (
@@ -22,7 +23,7 @@ const Catalog = () => {
             </header>
 
             <div className="container mx-auto mt-6 px-4">
-                
+
                 <div className="flex flex-col md:flex-row">
 
 
@@ -98,6 +99,20 @@ const Catalog = () => {
                                     $29.99
                                 </p>
                             </div>
+                            {products.map(product => (
+                                <div key={product.id} className="border p-4 rounded-lg shadow-md">
+                                    <Link href={`/catalog/product-details/${product.id}`}>
+                                        <img src="https://placehold.co/200x200" alt={product.name} className="w-full h-48 object-cover mb-2" />
+                                        <h2 className="text-lg font-semibold">{product.name}</h2>
+                                        <div className="flex items-center mt-2">
+                                            <div className="text-red-500 text-lg font-bold">${product.price.toFixed(2)}</div>
+                                            <div className="text-gray-500 line-through ml-2">${product.original_price.toFixed(2)}</div>
+                                        </div>
+                                        <div className="text-sm text-gray-500 mt-1">{product.ratings} ★</div>
+                                    </Link>
+                                </div>
+                            ))}
+
                             <div className="bg-white p-4 shadow-md">
                                 <span className="bg-orange-500 text-white px-2 py-1 text-xs font-bold rounded-full">
                                     #6

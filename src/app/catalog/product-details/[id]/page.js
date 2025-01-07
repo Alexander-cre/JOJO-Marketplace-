@@ -1,10 +1,48 @@
+"use client"
+
 import Footer from "@/components/footer";
 import NavBar from "@/components/navbar";
 import Link from "next/link";
 import React from "react";
+import { useParams } from "next/navigation";
+import products from "@/app/data/products";
+import { useEffect, useState } from "react";
+import { useCart } from "@/app/user/cart/context/CartContext";
+
+
 
 
 const productDetails = () => {
+
+    const params = useParams();
+    const id = Number(params.id);
+    const [product, setProduct] = useState(null); // State to hold the product
+    const { addToCart } = useCart();
+    const [selectedSize, setSelectedSize] = useState(null);
+    const [selectedColor, setSelectedColor] = useState(null);
+
+    useEffect(() => {
+        const foundProduct = products.find((product) => product.id === id);
+        if (foundProduct) {
+            setProduct(foundProduct);
+        } else {
+            console.error(`Product with id ${id} not found`);
+            setProduct(null);
+        }
+    }, [id]);
+
+    if (!product) {
+        return <div>Loading...</div>;
+    }
+
+    const handleAddToCart = () => {
+        const itemToAdd = { ...product }; // Create an object with product details
+        addToCart(itemToAdd); // Add the item to the cart
+        console.log("Added to cart:", itemToAdd); // Log the added item to the console
+        alert(`${product.name} has been added!`); // Alert the user
+    };
+
+    // Render the product details
     return (
         <div className="">
             <NavBar />
@@ -22,13 +60,13 @@ const productDetails = () => {
                     </div>
                 </div>
                 <div className="lg:w-1/2 lg:pl-8 mt-8 lg:mt-0">
-                    <h1 className="text-2xl font-bold">WOMEN SUPIMA® COTTON V-NECK SHORT-SLEEVE T-SHIRT</h1>
+                    <h1 className="text-2xl font-bold">WOMEN SUPIMA® COTTON V-NECK SHORT-SLEEVE T-SHIRT {product.name}</h1>
                     <div className="flex items-center mt-2">
-                        <div className="text-red-500 text-xl font-bold">$9.90</div>
-                        <div className="text-gray-500 line-through ml-2">$14.90</div>
+                        <div className="text-red-500 text-xl font-bold">${product.price}</div>
+                        <div className="text-gray-500 line-through ml-2">${product.original_price}</div>
                     </div>
                     <div className="flex items-center mt-2">
-                        <div className="text-red-500 text-sm font-bold">4.5</div>
+                        <div className="text-red-500 text-sm font-bold">{product.ratings}</div>
                         <div className="text-gray-500 text-sm ml-2">(30 reviews)</div>
                     </div>
                     <div className="mt-4">
@@ -54,9 +92,13 @@ const productDetails = () => {
                         </div>
                     </div>
                     <div className="mt-4">
-                    <Link href={'/user/cart'}>
-                        <button className="w-full bg-black text-white py-2 rounded">ADD TO CART</button>
-                    </Link>    
+                        <button
+                            className="w-full bg-black text-white py-2 rounded"
+                            onClick={handleAddToCart}
+                        >
+                            ADD TO CART
+                        </button>
+
                     </div>
                     <div className="mt-4">
                         <div className="text-sm text-gray-600">Product Detail</div>
