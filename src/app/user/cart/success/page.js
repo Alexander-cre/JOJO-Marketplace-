@@ -1,12 +1,27 @@
 import Footer from "@/components/footer";
 import NavBar from "@/components/navbar";
 import React  from "react";
+import { useRouter } from 'next/compat/router';
 
 const checkoutOrderdetails = () => {
+
+    const router = useRouter();
+    const { trxref, reference, status, trans } = router.query; // Extract query parameters
+
+
     return(
         <div>
             <NavBar />
         <div className="max-w-4xl mx-auto bg-white p-6 mt-6 shadow-md">
+
+                    <div>
+            <h1>Payment Successful!</h1>
+            <p><strong>Message:</strong> Approved</p>
+            <p><strong>Transaction Reference:</strong> {reference}</p>
+            <p><strong>Transaction ID:</strong> {trans}</p>
+            <p><strong>Transaction Reference (trxref):</strong> {trxref}</p>
+            <p><strong>Status:</strong> {status}</p>
+        </div>
 
         <div className="border-b border-gray-300 mb-6"></div>
         <h1 className="text-2xl font-bold mb-4">Thank you for your order #3911690705825</h1>
@@ -26,15 +41,9 @@ const checkoutOrderdetails = () => {
                 <p>San Francisco, CA 94123</p>
                 <p>test-order@baymard.com</p>
             </div>
-            <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-green-500 rounded-full"></div>
-                <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-                <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
-            </div>
         </div>
         <div className="border-b border-gray-300 mb-6"></div>
-        <div className="flex justify-between mb-6">
+        <div className="flex items-center mb-6">
             <div className="flex items-center space-x-4">
                 <img src="https://placehold.co/100x100?text=Product+Image" alt="Crayola 83-Piece Bundle Set" className="w-20 h-20"/>
                 <div>
