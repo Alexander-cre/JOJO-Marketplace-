@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <div>
       <NavBar />
-      <main className="p-4">
-        <div className="bg-gray-500 text-white p-8 rounded-lg mb-4 slider">
+      <main className="">
+        <div className="bg-gray-500 text-white rounded-lg mb-4 slider">
           <img src="" alt="/" />
           <h1 className="text-3xl font-bold">Steal-worthy gifts under $10</h1>
           <p>Shop white elephant</p>
